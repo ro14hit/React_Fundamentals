@@ -340,3 +340,59 @@ By using useCallback judiciously, you can optimize your React applications by pr
 re-renders in child components and improving overall performance.
 
 ********************************************************************************************************************************************************************
+
+GG\\useMemo\\
+=================================================================================================================================
+The useMemo Hook in React is a performance optimization tool that allows you to memoize the 
+result of an expensive function call. Here's a breakdown of its functionalities and an example:
+
+
+  Functionalities:
+    >> Memoization of Function Results:
+       ====================================
+       useMemo caches the result of a function you provide. The function is only re-executed if 
+       its dependencies change. This is similar to useCallback for memoizing functions, but
+       useMemo focuses on the result of the function, not the function itself.
+
+    >> Optimizing Expensive Computations:
+       ==================================
+       If a component relies on an expensive computation (e.g., complex calculations, data filtering, 
+       API calls within the component), wrapping that computation in useMemo can significantly improve 
+       performance. The cached result is used for subsequent renders unless the dependencies change.
+
+    >> Specifying Dependencies:
+       useMemo takes two arguments:
+       ===============================
+          => The function whose result you want to memoize.
+          => An optional dependency array. This array specifies the values 
+             that the function relies on. If any of these values change, the function will be re-executed
+             and the result will be recalculated and cached again.
+
+Consider a component (ExpensiveList) that renders a list of items based on a complex filtering logic:
+
+import React, { useState, useMemo } from 'react';
+
+function ExpensiveList(props) {
+  const [searchText, setSearchText] = useState('');
+  const [items, setItems] = useState([]); // Assume items come from an API
+
+  const filteredItems = useMemo(() => {
+    // Expensive filtering logic based on searchText and items
+    return items.filter((item) => item.name.includes(searchText));
+  }, [searchText, items]); // Re-calculate only when searchText or items change
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+      />
+      <ul>
+        {filteredItems.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
