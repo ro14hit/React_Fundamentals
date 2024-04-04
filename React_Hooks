@@ -1,0 +1,25 @@
+     React Hook 
+**********************************************************************************************************************************************************************************************************************
+\\\\useState\\\\
+=================================================================================================================================================================================
+
+The useState Hook is a fundamental building block for managing state within functional components in React. 
+It allows you to declare and manage state variables directly within a function component, eliminating the 
+need for class-based components in many cases.
+
+
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    const handleClick = () => {
+        setCount(count + 1); // Update state by incrementing
+    };
+
+    return (
+        <div>
+            <p>You clicked {count} times</p>
+            <button onClick={handleClick}>Click me</button>
+        </div>
+    );
+}
+**********************************************************************************************************************************************************************************************************************
