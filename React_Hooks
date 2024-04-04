@@ -108,3 +108,59 @@ function ImageSize() {
     );
 }
 **********************************************************************************************************************************************************************************************************************
+
+\\\useEffect\\\
+=======================================================================================================================================================
+The useEffect Hook in React is a powerful tool for performing side effects in functional components. 
+
+Side effects are actions that can't be directly done within the component rendering process, such as:
+
+1)Data Fetching: Fetching data from APIs or external sources.
+2)Subscriptions: Setting up subscriptions to external data sources (e.g., WebSockets).
+3)Timers: Creating timers or intervals that update the UI.
+4)DOM Manipulation: Directly manipulating the DOM outside of React's reconciliation process (use sparingly).
+5)Cleanup: Performing cleanup tasks when a component unmounts (e.g., clearing timers, removing event listeners).
+
+A)Running Code After Render (Similar to componentDidMount and componentDidUpdate):
+================================================================================
+
+import React, { useState, useEffect } from 'react';
+
+function FetchData() {
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('https://api.example.com/data');
+            const data = await response.json();
+            setData(data);
+        };
+        fetchData();
+    }, []); // Empty array: runs only on initial render
+
+    return (
+        <div>
+            {data ? (
+                <p>Data: {JSON.stringify(data)}</p>
+            ) : (
+                <p>Loading data...</p>
+            )}
+        </div>
+    );
+}
+
+B) Cleanup Function:
+====================
+You can optionally return a function from useEffect. This function is called when the 
+component unmounts or before the effect runs again if the dependencies change. It's 
+useful for cleaning up side effects, like canceling timers or removing event listeners.
+
+useEffect(() => {
+    const listener = () => {
+        // Do something on window resize
+    };
+    window.addEventListener('resize', listener);
+
+    return () => window.removeEventListener('resize', listener); // Cleanup
+}, []);
+********************************************************************************************************************************************************************************************************************
