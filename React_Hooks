@@ -1,6 +1,6 @@
      React Hook 
 **********************************************************************************************************************************************************************************************************************
-\\\\useState\\\\
+AA\\\\useState\\\\
 =================================================================================================================================================================================
 
 The useState Hook is a fundamental building block for managing state within functional components in React. 
@@ -24,7 +24,7 @@ function Counter() {
 }
 **********************************************************************************************************************************************************************************************************************
 
-\\\\useRef\\\\
+BB\\\\useRef\\\\
 =================================================================================================================================================================================
 The useRef Hook is another essential tool in React's arsenal. It allows you to create a mutable reference object that persists 
 throughout the lifecycle of a component. Unlike useState, changes to a useRef object don't trigger re-renders, making 
@@ -109,7 +109,7 @@ function ImageSize() {
 }
 **********************************************************************************************************************************************************************************************************************
 
-\\\useEffect\\\
+CC\\\useEffect\\\
 =======================================================================================================================================================
 The useEffect Hook in React is a powerful tool for performing side effects in functional components. 
 
@@ -165,7 +165,7 @@ useEffect(() => {
 }, []);
 ********************************************************************************************************************************************************************************************************************
 
-\\\useReducer\\\
+DD\\\useReducer\\\
 ========================================================================================================================================================
 The useReducer Hook in React provides a powerful alternative to useState for managing
 complex state logic, especially when dealing with multiple interrelated pieces of state.
@@ -220,3 +220,59 @@ const handleIncrement = () => {
 
 
 **********************************************************************************************************************************************************************************************************************
+
+EE\\\ useContext\\\
+==================================================================================================================================
+The useContext Hook is a powerful tool for managing and sharing data across components 
+in React applications without prop drilling. It allows functional components to access 
+data provided by a parent component several levels above in the component hierarchy.
+
+A) Creating Context:
+=====================
+Use React.createContext() to create a context object. This object serves as a container
+for the data you want to share.
+
+import React, { createContext } from 'react';
+
+const ThemeContext = createContext({
+    theme: 'light',
+    toggleTheme: () => {} // Placeholder for theme toggle function
+});
+
+B) Providing Context:
+======================
+Wrap the part of your component tree where you want to make the context data available
+with a provider component. Pass the actual data you want to share as a prop to the provider.
+
+function App() {
+    const [theme, setTheme] = useState('light');
+
+    const toggleTheme = () => {
+        setTheme(theme === 'light' ? 'dark' : 'light');
+    };
+
+    return (
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            {/* Your components that need theme data */}
+        </ThemeContext.Provider>
+    );
+}
+
+C) Consuming Context:
+=====================
+In any component within the provider hierarchy, you can use the useContext Hook to access
+the context data. This hook takes the context object as an argument and returns the current
+value of the context.
+
+import React, { useContext } from 'react';
+
+function Toolbar() {
+    const { theme, toggleTheme } = useContext(ThemeContext);
+
+    return (
+        <div>
+            <button onClick={toggleTheme}>Toggle Theme ({theme})</button>
+        </div>
+    );
+}
+*******************************************************************************************************************************************************************
