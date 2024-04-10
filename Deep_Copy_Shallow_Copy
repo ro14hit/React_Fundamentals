@@ -1,1 +1,58 @@
-Created file
+
+In JavaScript, copying objects involves creating a new object that reflects the original one. But there are two ways to approach 
+this copying, leading to different behaviors: shallow copy and deep copy.
+
+1>> Shallow Copy:
+===================
+Imagine a shallow copy as photocopying a document with a bunch of stapled attachments. The photocopy captures the main document 
+itself, but it just copies the references (staples) to the attachments, not their actual content.
+
+const person = {
+  name: "Alice",
+  address: {
+    street: "123 Main St",
+  },
+};
+
+const newPerson = person; // This is a shallow copy!
+
+newPerson.name = "Bob"; // Modifies the original person.name as well
+console.log(person.name); // Output: "Bob"
+
+newPerson.address.street = "456 Elm St"; // Modifies person's address too!
+console.log(person.address.street); // Output: "456 Elm St"
+
+In this example, newPerson is a shallow copy of person. Any changes to newPerson's properties, even nested ones, will 
+also affect the original person object because they both refer to the same address information in memory.
+
+2>> Deep Copy:
+===============
+A deep copy is like photocopying the entire document, including all the attachments. It creates a completely independent 
+copy of the original object, with all its properties and nested objects having their own separate memory locations.
+
+There's no built-in function for deep copy in JavaScript, but here's a common approach using JSON:
+
+const person = {
+  name: "Alice",
+  address: {
+    street: "123 Main St",
+  },
+};
+
+const newPerson = JSON.parse(JSON.stringify(person)); // Deep copy using JSON
+
+newPerson.name = "Bob";
+console.log(person.name); // Output: "Alice" (Original remains unchanged)
+
+newPerson.address.street = "456 Elm St";
+console.log(person.address.street); // Output: "123 Main St" (Original is not affected)
+
+Here, we stringify the person object into JSON format (which only handles primitive values), then parse it back into 
+a new object (newPerson). This creates a new object with all primitive values copied and nested objects recreated independently.
+
+Choosing Between Shallow and Deep Copy:
+=======================================
+>>>Use shallow copy when you only need a new reference to the same data and modifications in the copy are intended to
+   reflect in the original.
+>>>Use deep copy when you need an independent copy of the object and changes in the copy should not affect the original.
+   This is especially important for objects containing nested objects or arrays.
